@@ -1,0 +1,667 @@
+/* ============================================================
+   TEEMA — muuta ulkoasua täältä
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* --- Värit --- */
+  --color-bg:           #0c0f14;
+  --color-surface:      #141820;
+  --color-surface-2:    #1c2130;
+  --color-border:       #232b3a;
+  --color-border-light: #2e3a4e;
+
+  --color-text:         #e8edf5;
+  --color-text-2:       #8a9ab5;
+  --color-text-3:       #4d5f7a;
+
+  --color-primary:      #007AC9;   /* HSL sininen */
+  --color-accent:       #00b4d8;
+
+  --color-on-time:      #22c55e;
+  --color-delay-sm:     #f59e0b;
+  --color-delay-lg:     #ef4444;
+  --color-no-rt:        #4d5f7a;
+
+  /* --- Linja-värit modeittain --- */
+  --color-bus:          #007AC9;
+  --color-tram:         #00985f;
+  --color-metro:        #ff6319;
+  --color-train:        #8c4799;
+  --color-ferry:        #00b9e4;
+
+  /* --- Typografia --- */
+  --font:               'Poppins', sans-serif;
+
+  --text-xs:    11px;
+  --text-sm:    13px;
+  --text-base:  15px;
+  --text-lg:    18px;
+  --text-xl:    22px;
+  --text-2xl:   28px;
+
+  --weight-normal:  400;
+  --weight-medium:  500;
+  --weight-semi:    600;
+  --weight-bold:    700;
+  --weight-black:   800;
+
+  /* --- Spacing --- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+
+  /* --- Muoto --- */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --radius-xl:  20px;
+
+  /* --- Varjot --- */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+
+  /* --- Animaatiot --- */
+  --transition: 0.18s ease;
+
+  /* --- Layout --- */
+  --nav-height:    64px;
+  --header-height: 56px;
+  --max-width:     480px;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: var(--text-base);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font-family: var(--font);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input {
+  font-family: var(--font);
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  position: relative;
+}
+
+.view {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: calc(var(--nav-height) + var(--space-4));
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-5);
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.header__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-2);
+  transition: background var(--transition);
+  flex-shrink: 0;
+}
+.header__back:hover { background: var(--color-surface); }
+
+.header__title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semi);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header__action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-2);
+  transition: background var(--transition), color var(--transition);
+  flex-shrink: 0;
+}
+.header__action:hover { background: var(--color-surface); }
+.header__action--active { color: var(--color-delay-sm); }
+
+/* ============================================================
+   BOTTOM NAVIGATION
+   ============================================================ */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-width);
+  height: var(--nav-height);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: stretch;
+  z-index: 20;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--color-text-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  transition: color var(--transition);
+}
+.nav-item--active { color: var(--color-primary); }
+
+/* ============================================================
+   SEARCH BAR
+   ============================================================ */
+
+.search-wrap {
+  padding: var(--space-4) var(--space-5);
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 0 var(--space-4);
+  height: 48px;
+  transition: border-color var(--transition);
+}
+.search-bar:focus-within { border-color: var(--color-primary); }
+
+.search-bar input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--color-text);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+}
+.search-bar input::placeholder { color: var(--color-text-3); }
+
+.search-bar .icon { color: var(--color-text-3); flex-shrink: 0; }
+
+.search-bar__clear {
+  color: var(--color-text-3);
+  display: flex;
+  align-items: center;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition);
+}
+.search-bar__clear:hover { color: var(--color-text); }
+
+/* ============================================================
+   SECTION LABEL
+   ============================================================ */
+
+.section-label {
+  padding: var(--space-2) var(--space-5) var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  color: var(--color-text-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   STOP CARD (käytetään kotinäytöllä ja hakutuloksissa)
+   ============================================================ */
+
+.stop-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background var(--transition);
+  -webkit-user-select: none;
+}
+.stop-card:active { background: var(--color-surface); }
+.stop-card:last-child { border-bottom: none; }
+
+.stop-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.stop-card__info { flex: 1; min-width: 0; }
+
+.stop-card__name {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semi);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stop-card__meta {
+  font-size: var(--text-xs);
+  color: var(--color-text-2);
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.stop-card__fav {
+  color: var(--color-text-3);
+  display: flex;
+  align-items: center;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  transition: color var(--transition), background var(--transition);
+  flex-shrink: 0;
+}
+.stop-card__fav:hover { background: var(--color-surface-2); color: var(--color-delay-sm); }
+.stop-card__fav--active { color: var(--color-delay-sm); }
+
+/* ============================================================
+   MODE BADGE (BUS / METRO / TRAM jne)
+   ============================================================ */
+
+.mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  padding: 1px 7px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   DEPARTURE LIST
+   ============================================================ */
+
+.departures-list { padding: 0 var(--space-5); }
+
+.departure-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.departure-row:last-child { border-bottom: none; }
+
+.line-badge {
+  min-width: 52px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.departure-row__info { flex: 1; min-width: 0; }
+
+.departure-row__dest {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semi);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.departure-row__time {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 3px;
+}
+
+.departure-row__sched {
+  font-size: var(--text-xs);
+  color: var(--color-text-2);
+}
+
+.delay-tag {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.departure-row__mins {
+  text-align: right;
+  flex-shrink: 0;
+  min-width: 52px;
+}
+
+.mins-value {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+}
+
+.mins-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-3);
+  margin-top: 1px;
+}
+
+/* ============================================================
+   STOP DETAIL VIEW
+   ============================================================ */
+
+.stop-hero {
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.stop-hero__name {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-2);
+}
+
+.stop-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--text-xs);
+  color: var(--color-on-time);
+  font-weight: var(--weight-medium);
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-on-time);
+  animation: livePulse 2s infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(34,197,94,0); }
+}
+
+/* ============================================================
+   DATE PICKER (aikataulu)
+   ============================================================ */
+
+.date-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--color-border);
+}
+.date-bar::-webkit-scrollbar { display: none; }
+
+.date-chip {
+  flex-shrink: 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-2);
+  transition: all var(--transition);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.date-chip:hover { border-color: var(--color-primary); color: var(--color-text); }
+.date-chip--active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.date-input-wrap {
+  flex-shrink: 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-2);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.date-input-wrap input[type="date"] {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--color-text-2);
+  font-family: var(--font);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  width: 0;
+  opacity: 0;
+  position: absolute;
+}
+
+/* ============================================================
+   SCHEDULE TABLE (päivittäinen aikataulu)
+   ============================================================ */
+
+.schedule-group { margin-bottom: var(--space-4); }
+
+.schedule-group__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+}
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+.schedule-row:last-child { border-bottom: none; }
+
+.schedule-row__time {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semi);
+  color: var(--color-text);
+  min-width: 42px;
+}
+
+.schedule-row__dest {
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--color-text-2);
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-5);
+  text-align: center;
+  gap: var(--space-3);
+}
+
+.empty-state__icon {
+  color: var(--color-text-3);
+  opacity: 0.5;
+}
+
+.empty-state__title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semi);
+  color: var(--color-text-2);
+}
+
+.empty-state__desc {
+  font-size: var(--text-sm);
+  color: var(--color-text-3);
+  line-height: 1.6;
+  max-width: 260px;
+}
+
+/* ============================================================
+   SPINNER
+   ============================================================ */
+
+.spinner-wrap {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================================
+   ERROR BANNER
+   ============================================================ */
+
+.error-banner {
+  margin: var(--space-4) var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-delay-lg);
+}
+
+/* ============================================================
+   DISTANCE BADGE
+   ============================================================ */
+
+.dist-badge {
+  font-size: var(--text-xs);
+  color: var(--color-text-3);
+}
+
+/* ============================================================
+   UPDATE BAR
+   ============================================================ */
+
+.update-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-5);
+}
+
+.update-bar__label {
+  font-size: var(--text-xs);
+  color: var(--color-text-3);
+}
+
+.update-bar__refresh {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-xs);
+  color: var(--color-text-3);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+}
+.update-bar__refresh:hover { color: var(--color-text); background: var(--color-surface); }
+.update-bar__refresh.spinning svg { animation: spin 0.7s linear infinite; }
