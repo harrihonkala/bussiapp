@@ -2,7 +2,7 @@
   "name": "Bussit — HSL pysäkkinäyttö",
   "short_name": "Bussit",
   "description": "Reaaliaikainen HSL-pysäkkinäyttö",
-  "start_url": "/",
+  "start_url": "/bussiapp",
   "display": "standalone",
   "background_color": "#0c0f14",
   "theme_color": "#0c0f14",
